@@ -2,9 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ActionCommandGame.Ui.WebApp.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,6 +27,32 @@ namespace ActionCommandGame.Ui.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+            //add database context
+            services.AddDbContext<AppDbContext>(config =>
+            {
+                config.UseInMemoryDatabase("Memory");
+            });
+
+            
+            //Identity to create users -> register and logging in
+            services.AddIdentity<IdentityUser, IdentityRole>(config =>
+                {
+                    config.Password.RequireDigit = false;
+                    config.Password.RequireUppercase = false;
+                    config.Password.RequireNonAlphanumeric = false;
+                    config.Password.RequiredLength = 4;
+                })
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+
+            //Cookie for logging in is saved in browser
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.Cookie.Name = "Identity.Cookie";
+                config.LoginPath = "/Home/Login";
+            });
+
             services.AddControllersWithViews();
         }
 
@@ -44,6 +74,9 @@ namespace ActionCommandGame.Ui.WebApp
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            //check first if user is logged in as an existing user
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
