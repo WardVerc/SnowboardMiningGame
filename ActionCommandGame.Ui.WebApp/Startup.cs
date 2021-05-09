@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ActionCommandGame.Ui.WebApp.Data;
+using ActionCommandGame.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,9 +29,10 @@ namespace ActionCommandGame.Ui.WebApp
         {
             
             //add database context
-            services.AddDbContext<AppDbContext>(config =>
+            services.AddDbContext<ActionButtonGameDbContext>(config =>
             {
-                config.UseInMemoryDatabase("Memory");
+                config.UseSqlServer(Configuration.GetConnectionString("Default"), 
+                    b => b.MigrationsAssembly("ActionCommandGame.Ui.WebApp"));
             });
 
             
@@ -43,7 +44,7 @@ namespace ActionCommandGame.Ui.WebApp
                     config.Password.RequireNonAlphanumeric = false;
                     config.Password.RequiredLength = 4;
                 })
-                .AddEntityFrameworkStores<AppDbContext>()
+                .AddEntityFrameworkStores<ActionButtonGameDbContext>()
                 .AddDefaultTokenProviders();
 
             //Cookie for logging in is saved in browser

@@ -1,10 +1,17 @@
-﻿
+﻿@model ActionCommandGame.Model.Player;
+
 <h1>Register</h1>
 
 <p>Register your account here</p>
 
 <form method="post">
-    <input type="text" name="username" value="" />
-    <input type="text" name="password" value="" />
+    <label asp-for="@Model.Name"></label>
+    <input type="text" asp-for="@Model.Name" name="username" value=""/>
+    <span asp-validation-for="@Model.Name" class="text-danger"></span>
+    
+    <label asp-for="@Model.Password"></label>
+    <input type="text" asp-for="@Model.Password" name="password" value=""/>
+    <span asp-validation-for="@Model.Password" class="text-danger"></span>
+    
     <button type="submit" asp-action="Register">Register</button>
 </form>
