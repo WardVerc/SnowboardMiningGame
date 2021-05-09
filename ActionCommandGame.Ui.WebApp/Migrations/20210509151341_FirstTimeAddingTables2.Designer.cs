@@ -4,14 +4,16 @@ using ActionCommandGame.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ActionCommandGame.Ui.WebApp.Migrations
 {
     [DbContext(typeof(ActionButtonGameDbContext))]
-    partial class ActionButtonGameDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210509151341_FirstTimeAddingTables2")]
+    partial class FirstTimeAddingTables2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,21 +186,6 @@ namespace ActionCommandGame.Ui.WebApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PositiveGameEvents");
-                });
-
-            modelBuilder.Entity("ActionCommandGame.Model.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("ActionCommandGame.Model.Player", b =>

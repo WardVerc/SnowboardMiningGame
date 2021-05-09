@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -31,13 +32,15 @@ namespace ActionCommandGame.Ui.WebApp
             //add database context
             services.AddDbContext<ActionButtonGameDbContext>(config =>
             {
+                //getconnectionstring + dbcontext file is in other project so define where startup project is
                 config.UseSqlServer(Configuration.GetConnectionString("Default"), 
                     b => b.MigrationsAssembly("ActionCommandGame.Ui.WebApp"));
             });
 
             
             //Identity to create users -> register and logging in
-            services.AddIdentity<IdentityUser, IdentityRole>(config =>
+            //need to extend identityUser with player, and role
+            services.AddIdentity<Player, Role>(config =>
                 {
                     config.Password.RequireDigit = false;
                     config.Password.RequireUppercase = false;

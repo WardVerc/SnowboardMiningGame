@@ -14,12 +14,12 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<Player> _userManager;
+        private readonly SignInManager<Player> _signInManager;
         
         
-        public HomeController(UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+        public HomeController(UserManager<Player> userManager,
+            SignInManager<Player> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -90,7 +90,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
                 
                 
                 //create new user for in the cookie - to store in the browser
-                var user = new IdentityUser
+                var user = new Player
                 {
                     UserName = player.Name
                 };
