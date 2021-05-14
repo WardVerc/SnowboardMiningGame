@@ -40,7 +40,7 @@ namespace ActionCommandGame.Ui.WebApp
             
             //Identity to create users -> register and logging in
             //need to extend identityUser with player, and role
-            services.AddIdentity<Player, Role>(config =>
+            services.AddDefaultIdentity<IdentityUser>(config =>
                 {
                     config.Password.RequireDigit = false;
                     config.Password.RequireUppercase = false;

@@ -4,14 +4,16 @@ using ActionCommandGame.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ActionCommandGame.Ui.WebApp.Migrations
 {
     [DbContext(typeof(ActionButtonGameDbContext))]
-    partial class ActionButtonGameDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210514111038_first")]
+    partial class first
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

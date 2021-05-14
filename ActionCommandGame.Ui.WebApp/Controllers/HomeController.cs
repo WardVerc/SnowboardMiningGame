@@ -14,12 +14,12 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly UserManager<Player> _userManager;
-        private readonly SignInManager<Player> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
         
         
-        public HomeController(UserManager<Player> userManager,
-            SignInManager<Player> signInManager)
+        public HomeController(UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -83,6 +83,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
         public async Task<IActionResult> Register(Player player)
         {
 
+            //not valid because not all fields are returned in 'player'
             if (ModelState.IsValid)
             {
                 
@@ -90,7 +91,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
                 
                 
                 //create new user for in the cookie - to store in the browser
-                var user = new Player
+                var user = new IdentityUser()
                 {
                     UserName = player.Name
                 };

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ActionCommandGame.Model
 {
-    public class Player: IdentityUser
+    public class Player
     {
         //this model is only for front end purposes, no db involved here
         public Player()
@@ -16,13 +16,13 @@ namespace ActionCommandGame.Model
 
         public new int Id { get; set; }
         
-        [Display(Name = "Player's name")]
+        [Display(Name = "Player's name: ")]
         [Required(ErrorMessage = "Name is required.")]
         [StringLength(20, MinimumLength = 4, ErrorMessage = "Length of name must be in range of 4-20.")]
         public string Name { get; set; }
         
         //password only needed for front end 
-        [Display(Name = "Password")]
+        [Display(Name = "Password: ")]
         [Required(ErrorMessage = "You must have a password.")]
         [DataType(DataType.Password)]
         [StringLength(20, MinimumLength = 4, ErrorMessage = "Length of password must be in range of 4-20.")]
