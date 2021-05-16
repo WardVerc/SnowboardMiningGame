@@ -25,20 +25,15 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             _signInManager = signInManager;
         }
 
+        //Authorize, so this page is only accessable when user is logged in
+        //logged in = cookie is found with correct user+password combo
+        //is done via app.UseAuthentication() in Startup.cs
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
 
-        //Authorize, so this page is only accessable when user is logged in
-        //logged in = cookie is found with correct user+password combo
-        //is done via app.UseAuthentication() in Startup.cs
-        [Authorize]
-        public IActionResult Secret()
-        {
-            return View();
-        }
-        
         //Log in
         public IActionResult Login()
         {

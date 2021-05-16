@@ -5,13 +5,18 @@
 <p>Login here</p>
 
 <form method="post">
-    <label asp-for="@Model.Name"></label>
-    <input type="text" asp-for="@Model.Name" name="username" value=""/>
-    <span asp-validation-for="@Model.Name" class="text-danger"></span>
-        
+    <div class="form-group">
+        <label asp-for="@Model.Name"></label>
+        <input type="text" asp-for="@Model.Name" name="name" value=""/>
+        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
     <label asp-for="@Model.Password"></label>
     <input type="text" asp-for="@Model.Password" name="password" value=""/>
     <span asp-validation-for="@Model.Password" class="text-danger"></span>
-        
-    <button type="submit" asp-action="Login">Login</button>
+        </div>
+    <input type="submit" asp-action="Login" value="Login" />
+    <br />
+    <br />
+    <a asp-controller="Home" asp-action="Register">Create a new account</a>
 </form>
