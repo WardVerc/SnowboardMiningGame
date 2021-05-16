@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using ActionCommandGame.Model;
+using ActionCommandGame.Services.Abstractions;
+using ActionCommandGame.Ui.WebApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using ActionCommandGame.Ui.WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
@@ -16,13 +16,16 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IPlayerService _playerService;
+        public Player currentPlayer;
         
         
         public HomeController(UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager, IPlayerService playerService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _playerService = playerService;
         }
 
         //Authorize, so this page is only accessable when user is logged in
@@ -34,14 +37,14 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             return View();
         }
 
-        //Log in
+        //Show log in page
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(Player player)
+        public async Task<IActionResult> Login(PlayerViewModel player)
         {
 
             if (ModelState.IsValid)
@@ -52,12 +55,18 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
 
                 if (user != null)
                 {
-                    //sign in with signinmanager
+                    //log in with signinmanager
                     var signInResult = await _signInManager.PasswordSignInAsync(user, player.Password, false, false);
 
-                    //if sign in with signinmanager succeeded, go back to homepage
+                    //if log in with signinmanager succeeded, go back to homepage
+                    //and also set the currentPlayer to the logged in Player
                     if (signInResult.Succeeded)
                     {
+                        //get Player from db
+                        
+                        //set currentPlayer to this Player
+                        
+                        //go to Home page
                         return RedirectToAction("Index");
                     }
                 }
@@ -68,23 +77,18 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             return View();
         }
         
-        //Register
+        //Show register page
         public IActionResult Register()
         {
             return View();
         }
         
         [HttpPost]
-        public async Task<IActionResult> Register(Player player)
+        public async Task<IActionResult> Register(PlayerViewModel player)
         {
 
-            //not valid because not all fields are returned in 'player'
             if (ModelState.IsValid)
             {
-                
-                
-                
-                
                 //create new user for in the cookie - to store in the browser
                 var user = new IdentityUser()
                 {
@@ -96,12 +100,30 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
 
                 if (result.Succeeded)
                 {
-                    //sign in with signinmanager
+                    //if result succeeded -> no user with this name already exists
+                    //so no check on name is needed
+                    
+                    //log in with signinmanager
                     var signInResult = await _signInManager.PasswordSignInAsync(user, player.Password, false, false);
 
-                    //if sign in with signinmanager succeeded, go back to homepage
+                    //if log in with signinmanager succeeded, go back to homepage
+                    //and also create a new Player
+                    //and set currentPlayer to this Player
                     if (signInResult.Succeeded)
                     {
+                        //use Create from PlayerService to save in db
+                        //validation and filling in fields correctly is done in the service layer
+                        var playerModel = new Player()
+                        {
+                            Name = player.Name
+                        };
+                        var returnedPlayer = _playerService.Create(playerModel);
+
+                        //set currentPlayer to returnedPlayer
+                        currentPlayer = returnedPlayer;
+                        Console.Write("Current player's name: " + currentPlayer.Name + ". ");
+                        
+                        //go to Home page
                         return RedirectToAction("Index");
                     }
                 

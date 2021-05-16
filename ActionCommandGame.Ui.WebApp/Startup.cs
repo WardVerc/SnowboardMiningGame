@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
+using ActionCommandGame.Services;
+using ActionCommandGame.Services.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -56,6 +58,8 @@ namespace ActionCommandGame.Ui.WebApp
                 config.Cookie.Name = "Identity.Cookie";
                 config.LoginPath = "/Home/Login";
             });
+
+            services.AddScoped<IPlayerService, PlayerService>();
 
             services.AddControllersWithViews();
         }

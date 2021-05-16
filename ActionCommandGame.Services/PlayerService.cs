@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
@@ -36,7 +37,38 @@ namespace ActionCommandGame.Services
 
         public Player Create(Player player)
         {
-            throw new System.NotImplementedException();
+            //new player so we only need a name
+            //-> name is validated in front end
+            
+            //check if player already is in db
+            var searchPlayer = _database.Players.SingleOrDefault(p => p.Name == player.Name);
+
+            if (searchPlayer != null)
+            {
+                Console.Write(player.Name + " is already in the db!");
+                
+                //return same object
+                return player;
+            }
+            else
+            {
+                //create new player object
+                var newPlayer = new Player()
+                {
+                    Name = player.Name,
+                    Money = 0
+                };
+                
+                //save in db
+                _database.Players.Add(newPlayer);
+                _database.SaveChanges();
+                Console.Write("New player added to db: " + newPlayer.Name + ". ");
+                
+                //return de nieuwe player
+                return newPlayer;
+            }
+            
+            //throw new System.NotImplementedException();
         }
 
         public Player Update(int id, Player player)
