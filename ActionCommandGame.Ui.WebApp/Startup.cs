@@ -6,6 +6,7 @@ using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
 using ActionCommandGame.Services;
 using ActionCommandGame.Services.Abstractions;
+using ActionCommandGame.Settings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +31,11 @@ namespace ActionCommandGame.Ui.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //add appsettings (still need to add the appsettings.json file no?)
+            var appSettings = new AppSettings();
+            Configuration.Bind(nameof(AppSettings), appSettings);
+
+            services.AddSingleton(appSettings);
             
             //add database context
             services.AddDbContext<ActionButtonGameDbContext>(config =>
@@ -59,7 +65,12 @@ namespace ActionCommandGame.Ui.WebApp
                 config.LoginPath = "/Home/Login";
             });
 
-            services.AddScoped<IPlayerService, PlayerService>();
+            services.AddTransient<IPlayerService, PlayerService>();
+            services.AddTransient<IGameService, GameService>();
+            services.AddTransient<IPositiveGameEventService, PositiveGameEventService>();
+            services.AddTransient<INegativeGameEventService, NegativeGameEventService>();
+            services.AddTransient<IItemService, ItemService>();
+            services.AddTransient<IPlayerItemService, PlayerItemService>();
 
             services.AddControllersWithViews();
         }

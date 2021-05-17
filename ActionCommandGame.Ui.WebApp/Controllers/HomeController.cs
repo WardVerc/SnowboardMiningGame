@@ -17,14 +17,16 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IPlayerService _playerService;
+        private readonly IGameService _gameService;
         public Player currentPlayer;
         
         public HomeController(UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager, IPlayerService playerService)
+            SignInManager<IdentityUser> signInManager, IPlayerService playerService, IGameService gameService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _playerService = playerService;
+            _gameService = gameService;
         }
 
         //Authorize, so this page is only accessable when user is logged in
@@ -33,9 +35,37 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
         [Authorize]
         public IActionResult Index()
         {
+            
             return View();
         }
+        
+        public IActionResult HitButton()
+        {
+            if (currentPlayer == null)
+            {
+                //get player from db (dont have id, so can't use Get() in playerService
+                var dbPlayer = _playerService.Find().SingleOrDefault(p => p.Name == User.Identity.Name);
+                        
+                //set currentPlayer to this Player
+                currentPlayer = dbPlayer;
+            }
+            
+            //PerformAction and get the result from it
+            var result = _gameService.PerformAction(currentPlayer.Id);
+            
+            Console.Write("Knop geklikt: " + result);
+            
+            //update currentPlayer
+            
+            //show result also on Index View
 
+            return RedirectToAction("Index");
+        }
+        
+        
+        
+        /* Logging in/out and Registering section */
+        
         //Show log in page
         public IActionResult Login()
         {
