@@ -19,7 +19,6 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
         private readonly IPlayerService _playerService;
         public Player currentPlayer;
         
-        
         public HomeController(UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager, IPlayerService playerService)
         {
@@ -49,7 +48,6 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-
                 //get the user via usermanager (= cookie stored in browser)
                 var user = await _userManager.FindByNameAsync(player.Name);
 
@@ -62,9 +60,13 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
                     //and also set the currentPlayer to the logged in Player
                     if (signInResult.Succeeded)
                     {
-                        //get Player from db
+                        //get player from db (dont have id, so can't use Get() in playerService
+                        var dbPlayer = _playerService.Find().SingleOrDefault(p => p.Name == player.Name);
                         
                         //set currentPlayer to this Player
+                        currentPlayer = dbPlayer;
+                        
+                        Console.Write("Current player's name (logged in): " + currentPlayer.Name + ". ");
                         
                         //go to Home page
                         return RedirectToAction("Index");
@@ -121,7 +123,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
 
                         //set currentPlayer to returnedPlayer
                         currentPlayer = returnedPlayer;
-                        Console.Write("Current player's name: " + currentPlayer.Name + ". ");
+                        Console.Write("Current player's name (registered): " + currentPlayer.Name + ". ");
                         
                         //go to Home page
                         return RedirectToAction("Index");

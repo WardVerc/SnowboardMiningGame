@@ -64,11 +64,9 @@ namespace ActionCommandGame.Services
                 _database.SaveChanges();
                 Console.Write("New player added to db: " + newPlayer.Name + ". ");
                 
-                //return de nieuwe player
+                //return the new player
                 return newPlayer;
             }
-            
-            //throw new System.NotImplementedException();
         }
 
         public Player Update(int id, Player player)
