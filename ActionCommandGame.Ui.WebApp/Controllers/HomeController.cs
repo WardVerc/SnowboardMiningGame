@@ -55,6 +55,8 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             
             Console.Write("Knop geklikt: " + result);
             
+            
+            
             //update currentPlayer
             
             //show result also on Index View
