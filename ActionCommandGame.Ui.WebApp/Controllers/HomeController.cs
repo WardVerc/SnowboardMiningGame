@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ActionCommandGame.Model;
 using ActionCommandGame.Services.Abstractions;
+using ActionCommandGame.Services.Model.Core;
+using ActionCommandGame.Services.Model.Results;
 using ActionCommandGame.Ui.WebApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -18,8 +20,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IPlayerService _playerService;
         private readonly IGameService _gameService;
-        public Player currentPlayer;
-        
+
         public HomeController(UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager, IPlayerService playerService, IGameService gameService)
         {
@@ -33,34 +34,35 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
         //logged in = cookie is found with correct user+password combo
         //is done via app.UseAuthentication() in Startup.cs
         [Authorize]
-        public IActionResult Index()
+        public IActionResult Index(PlayerGameresultViewModel model)
         {
+            var currentPlayer = _playerService.Find().SingleOrDefault(p => User.Identity != null && p.Name == User.Identity.Name);
             
-            return View();
+            model.CurrentPlayer = currentPlayer;
+ 
+            return View(model);
         }
         
         public IActionResult HitButton()
         {
-            if (currentPlayer == null)
+            var currentPlayer = _playerService.Find().SingleOrDefault(p => User.Identity != null && p.Name == User.Identity.Name);
+
+            //PerformAction and get the result from it
+            if (currentPlayer != null)
             {
-                //get player from db (dont have id, so can't use Get() in playerService
-                var dbPlayer = _playerService.Find().SingleOrDefault(p => p.Name == User.Identity.Name);
-                        
-                //set currentPlayer to this Player
-                currentPlayer = dbPlayer;
+                var result = _gameService.PerformAction(currentPlayer.Id);
+
+                //show result also on Index View
+                var model = new PlayerGameresultViewModel()
+                {
+                    CurrentPlayer = currentPlayer,
+                    Result = result
+                };
+                
+                //this model contains everything, just need to redirect WITH the model
+                return View("Index", model);
             }
             
-            //PerformAction and get the result from it
-            var result = _gameService.PerformAction(currentPlayer.Id);
-            
-            Console.Write("Knop geklikt: " + result);
-            
-            
-            
-            //update currentPlayer
-            
-            //show result also on Index View
-
             return RedirectToAction("Index");
         }
         
@@ -92,14 +94,6 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
                     //and also set the currentPlayer to the logged in Player
                     if (signInResult.Succeeded)
                     {
-                        //get player from db (dont have id, so can't use Get() in playerService
-                        var dbPlayer = _playerService.Find().SingleOrDefault(p => p.Name == player.Name);
-                        
-                        //set currentPlayer to this Player
-                        currentPlayer = dbPlayer;
-                        
-                        Console.Write("Current player's name (logged in): " + currentPlayer.Name + ". ");
-                        
                         //go to Home page
                         return RedirectToAction("Index");
                     }
@@ -151,19 +145,13 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
                         {
                             Name = player.Name
                         };
-                        var returnedPlayer = _playerService.Create(playerModel);
-
-                        //set currentPlayer to returnedPlayer
-                        currentPlayer = returnedPlayer;
-                        Console.Write("Current player's name (registered): " + currentPlayer.Name + ". ");
+                        _playerService.Create(playerModel);
                         
                         //go to Home page
                         return RedirectToAction("Index");
                     }
-                
                 }
             }
-            
             
             //if registering failed, just return the same page
             return View();

@@ -1,13 +1,87 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model ActionCommandGame.Ui.WebApp.ViewModels.PlayerGameresultViewModel;
 
 <div class="text-center">
-    <h1 class="display-4" style="margin-bottom: 200px;">Welcome, snowboarder!</h1>
-    
+    @if (Model.CurrentPlayer.Name != null)
+        {
+            <h1 class="display-4">Welcome, @Model.CurrentPlayer.Name!</h1>
+        }
+        else
+        {
+            <h1 class="display-4">Welcome, snowboarder!</h1>
+        }
+
+
+
+        <!-- If positive game event -->
+
+        @if (Model.Result?.Data?.PositiveGameEvent?.Name == null)
+        {
+            <div>
+            </div>
+        }
+        else
+        {
+            <div>
+                <h5>Positive game event:</h5>
+                <p>@Model.Result.Data.PositiveGameEvent.Name</p>
+                <p>@Model.Result.Data.PositiveGameEvent.Description</p>
+            </div>
+        }
+
+    <!-- If negative game event -->
+    @if (Model.Result?.Data?.NegativeGameEvent?.Name == null)
+    {
+        <div>
+        </div>
+    }
+    else
+    {
+        <div>
+            <h5>Negative game event:</h5>
+            <p>@Model.Result.Data.NegativeGameEvent.Name</p>
+            <p>@Model.Result.Data.NegativeGameEvent.Description</p>
+        </div>
+    }
+
+
+        <!-- If negative game event messages-->
+        @if (Model.Result?.Data?.NegativeGameEventMessages == null)
+        {
+            <div></div>
+        }
+        else
+        {
+            @foreach (var message in @Model.Result.Data.NegativeGameEventMessages)
+            {
+                <div>
+                    <h5>Negative game event message:</h5>
+                    <p>@message.Message</p>
+                </div>
+            }
+        }
+
+        <!-- Error messages if there are any -->
+        @if (Model.Result == null)
+        {
+            <div>
+            </div>
+        }
+        else
+        {
+            <div>
+                @foreach (var message in Model.Result.Messages)
+                {
+                    <div>
+                        <h5>Watchout:</h5>
+                        <p>@message.Message</p>
+                    </div>
+                }
+            </div>
+        }
+
     <div style="width: 50%; margin:  auto;">
         <input type="button" value="Hit the slopes!" asp-action="HitButton" class="btn btn-info"
                onclick="location.href='@Url.Action("HitButton", "Home")'"
-               style="width: 100%"/>
+               style="width: 100%; margin-top: 200px;"/>
     </div>
 </div>
