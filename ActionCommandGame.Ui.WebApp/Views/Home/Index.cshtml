@@ -1,87 +1,93 @@
 ﻿@model ActionCommandGame.Ui.WebApp.ViewModels.PlayerGameresultViewModel;
 
-<div class="text-center">
+<div>
     @if (Model.CurrentPlayer.Name != null)
         {
-            <h1 class="display-4">Welcome, @Model.CurrentPlayer.Name!</h1>
+            <h1 class="display-4 text-center">Welcome, @Model.CurrentPlayer.Name!</h1>
         }
         else
         {
-            <h1 class="display-4">Welcome, snowboarder!</h1>
+            <h1 class="display-4 text-center">Welcome, snowboarder!</h1>
         }
 
-
-
-        <!-- If positive game event -->
-
-        @if (Model.Result?.Data?.PositiveGameEvent?.Name == null)
-        {
-            <div>
-            </div>
-        }
-        else
-        {
-            <div>
-                <h5>Positive game event:</h5>
-                <p>@Model.Result.Data.PositiveGameEvent.Name</p>
-                <p>@Model.Result.Data.PositiveGameEvent.Description</p>
-            </div>
-        }
-
-    <!-- If negative game event -->
-    @if (Model.Result?.Data?.NegativeGameEvent?.Name == null)
-    {
-        <div>
+    <div id="centerGameSection" style="margin-top: 50px; display: flex; justify-content: space-between; align-items: center;">
+        <!--Player stats -->
+        <div style="width: 25%; font-size: small;">
+            <p style="font-weight: bold; font-size: medium;">Player stats:</p>
+            <p>Exp: @Model.CurrentPlayer.Experience</p>
+            <p>Money: @Model.CurrentPlayer.Money</p>
+            <p>Attack item: @Model.CurrentPlayer.CurrentAttackPlayerItem</p>
+            <p>Defense item: @Model.CurrentPlayer.CurrentDefensePlayerItem</p>
+            <p>Fuel: @Model.CurrentPlayer.CurrentFuelPlayerItem</p>
         </div>
-    }
-    else
-    {
-        <div>
-            <h5>Negative game event:</h5>
-            <p>@Model.Result.Data.NegativeGameEvent.Name</p>
-            <p>@Model.Result.Data.NegativeGameEvent.Description</p>
-        </div>
-    }
-
-
-        <!-- If negative game event messages-->
-        @if (Model.Result?.Data?.NegativeGameEventMessages == null)
-        {
-            <div></div>
-        }
-        else
-        {
-            @foreach (var message in @Model.Result.Data.NegativeGameEventMessages)
+        
+        <!-- Game event after click -->
+        <div style="width: 50%;">
+            <!-- If positive game event -->
+            @if (Model.Result?.Data?.PositiveGameEvent?.Name != null)
             {
                 <div>
-                    <h5>Negative game event message:</h5>
-                    <p>@message.Message</p>
+                    <h5>As you went boarding, you encounter ...</h5>
+                    <p>@Model.Result.Data.PositiveGameEvent.Name</p>
+                    <p>@Model.Result.Data.PositiveGameEvent.Description</p>
+                    <p style="font-size: small;">Exp: +@Model.Result.Data.PositiveGameEvent.Experience</p>
+                    <p style="font-size: small;">Money: +@Model.Result.Data.PositiveGameEvent.Money</p>
+                    </div>
+            }
+                    
+            <!-- If negative game event -->
+            @if (Model.Result?.Data?.NegativeGameEvent?.Name != null)
+            {
+                <div>
+                    <h5>As you went boarding, you encounter ...</h5>
+                    <p>@Model.Result.Data.NegativeGameEvent.Name</p>
+                    <p>@Model.Result.Data.NegativeGameEvent.Description</p>
                 </div>
             }
-        }
-
-        <!-- Error messages if there are any -->
-        @if (Model.Result == null)
-        {
-            <div>
-            </div>
-        }
-        else
-        {
-            <div>
-                @foreach (var message in Model.Result.Messages)
+                    
+                    
+                    
+            <!-- If negative game event messages-->
+            @if (Model.Result?.Data?.NegativeGameEventMessages?.Count > 0)
+            {
+                <div>
+                @foreach (var message in @Model.Result.Data.NegativeGameEventMessages)
                 {
                     <div>
-                        <h5>Watchout:</h5>
                         <p>@message.Message</p>
-                    </div>
+                        <p style="font-size: small;">Defense: -@Model.Result.Data.NegativeGameEvent?.DefenseLoss</p>
+                        </div>
                 }
-            </div>
-        }
+                </div>
+            }
+            
+        </div>
+        
+        
+        
+        <!-- Error messages if there are any -->
+        <div style="width: 25%; ">
+            @if (Model.Result != null)
+            {
+                <div>
+                    <p style="font-weight: bold;">Info:</p>
+                    @foreach (var message in Model.Result.Messages)
+                    {
+                        <div >
+                            <p style="font-size: small;">@message.Message</p>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+                
+    </div>
+
+    
 
     <div style="width: 50%; margin:  auto;">
         <input type="button" value="Hit the slopes!" asp-action="HitButton" class="btn btn-info"
                onclick="location.href='@Url.Action("HitButton", "Home")'"
-               style="width: 100%; margin-top: 200px;"/>
+               style="width: 100%; margin-top: 50px;"/>
     </div>
 </div>

@@ -50,12 +50,16 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             //PerformAction and get the result from it
             if (currentPlayer != null)
             {
+                //perform action
                 var result = _gameService.PerformAction(currentPlayer.Id);
+                
+                //get player stats
+                var playerWithStats = _playerService.Get(currentPlayer.Id);
 
                 //show result also on Index View
                 var model = new PlayerGameresultViewModel()
                 {
-                    CurrentPlayer = currentPlayer,
+                    CurrentPlayer = playerWithStats,
                     Result = result
                 };
                 

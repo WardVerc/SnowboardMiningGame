@@ -8,7 +8,6 @@ namespace ActionCommandGame.Model
 {
     public class Player
     {
-        //this model is only for front end purposes, no db involved here
         public Player()
         {
             Inventory = new List<PlayerItem>();
