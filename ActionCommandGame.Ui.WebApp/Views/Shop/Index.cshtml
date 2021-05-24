@@ -1,1 +1,79 @@
-﻿<h1>This is the shop!</h1>
+﻿@model ActionCommandGame.Ui.WebApp.ViewModels.ItemsShopViewModel;
+
+<h1>This is the shop!</h1>
+<h5>Your current balance: @Model.CurrentPlayer.Money €</h5>
+
+<h3>Fuel</h3>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+    @foreach (var item in Model.AllItems)
+    {
+        if (item.Fuel != 0 && item.Name != "GOD MODE" && item.Name != "Developer Food")
+        {
+            <div style="max-width: 200px; border-radius: 5px; border-style: solid; border-color: black;
+    padding: 10px; margin: 10px;">
+                <p style="font-weight: bold">@item.Name</p>
+                <p>@item.Description</p>
+                <p>Fuel: @item.Fuel</p>
+                <p>Cooldown seconds: @item.ActionCooldownSeconds</p>
+                <p>Price: @item.Price €</p>
+                <input type="button" class="btn btn-primary" value="Buy"/>
+            </div>
+            
+        }
+    }
+</div>
+
+<h3>Attack</h3>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+    @foreach (var item in Model.AllItems)
+    {
+        if (item.Attack != 0 && item.Name != "GOD MODE" && item.Name != "Developer Food")
+        {
+            <div style="max-width: 200px; border-radius: 5px; border-style: solid; border-color: black;
+    padding: 10px; margin: 10px;">
+                <p style="font-weight: bold">@item.Name</p>
+                <p>@item.Description</p>
+                <p>Attack: @item.Attack</p>
+                <p>Price: @item.Price €</p>
+                <input type="button" class="btn btn-primary" value="Buy"/>
+            </div>
+            
+        }
+    }
+</div>
+
+<h3>Defense</h3>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+    @foreach (var item in Model.AllItems)
+    {
+        if (item.Defense != 0 && item.Name != "GOD MODE" && item.Name != "Developer Food")
+        {
+            <div style="max-width: 200px; border-radius: 5px; border-style: solid; border-color: black;
+    padding: 10px; margin: 10px;">
+                <p style="font-weight: bold">@item.Name</p>
+                <p>@item.Description</p>
+                <p>Defense: @item.Defense</p>
+                <p>Price: @item.Price €</p>
+                <input type="button" class="btn btn-primary" value="Buy"/>
+            </div>
+            
+        }
+    }
+</div>
+<h3>Other</h3>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+    @foreach (var item in Model.AllItems)
+    {
+        if (item.Fuel == 0 && item.Attack == 0 && item.Defense == 0 && item.Name != "GOD MODE" && item.Name != "Developer Food")
+        {
+            <div style="max-width: 200px; border-radius: 5px; border-style: solid; border-color: black;
+    padding: 10px; margin: 10px;">
+                <p style="font-weight: bold">@item.Name</p>
+                <p>@item.Description</p>
+                <p>Price: @item.Price €</p>
+                <input type="button" class="btn btn-primary" value="Buy"/>
+            </div>
+            
+        }
+    }
+</div>

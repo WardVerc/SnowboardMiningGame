@@ -3,19 +3,20 @@
 <div>
     @if (Model.CurrentPlayer.Name != null)
         {
-            <h1 class="display-4 text-center">Welcome, @Model.CurrentPlayer.Name!</h1>
+            <h2 class="text-center" style="margin-bottom: 50px;">Want to hit the slopes, @Model.CurrentPlayer.Name?</h2>
         }
         else
         {
-            <h1 class="display-4 text-center">Welcome, snowboarder!</h1>
+            <h2 class="text-center" style="margin-bottom: 50px;">Welcome, snowboarder!</h2>
         }
 
-    <div id="centerGameSection" style="margin-top: 50px; display: flex; justify-content: space-between; align-items: center;">
+    <div id="centerGameSection" style="margin: 10px; display: flex; justify-content: space-between; align-items: center;">
         <!--Player stats -->
         <div style="width: 25%; font-size: small;">
-            <p style="font-weight: bold; font-size: medium;">Player stats:</p>
-            <p>Exp: @Model.CurrentPlayer.Experience</p>
-            <p>Money: @Model.CurrentPlayer.Money</p>
+            <p style="font-weight: bold; font-size: medium;">@Model.CurrentPlayer.Name's stats:</p>
+            <p>Level: @Math.Floor((Math.Sqrt(100*(2* Model.CurrentPlayer.Experience +25)) +50)/100)</p>
+            <p>Exp: @Model.CurrentPlayer.Experience XP</p>
+            <p>Money: @Model.CurrentPlayer.Money €</p>
             <p>Attack item: @Model.CurrentPlayer.CurrentAttackPlayerItem</p>
             <p>Defense item: @Model.CurrentPlayer.CurrentDefensePlayerItem</p>
             <p>Fuel: @Model.CurrentPlayer.CurrentFuelPlayerItem</p>
