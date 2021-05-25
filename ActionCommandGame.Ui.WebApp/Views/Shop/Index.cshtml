@@ -9,16 +9,19 @@
     {
         if (item.Fuel != 0 && item.Name != "GOD MODE" && item.Name != "Developer Food")
         {
-            <div style="max-width: 200px; border-radius: 5px; border-style: solid; border-color: black;
-    padding: 10px; margin: 10px;">
-                <p style="font-weight: bold">@item.Name</p>
-                <p>@item.Description</p>
-                <p>Fuel: @item.Fuel</p>
-                <p>Cooldown seconds: @item.ActionCooldownSeconds</p>
-                <p>Price: @item.Price €</p>
-                <input type="button" class="btn btn-primary" value="Buy"/>
-            </div>
-            
+            <form method="post">
+                <div style="max-width: 200px; border-radius: 5px; border-style: solid; border-color: black;
+                    padding: 10px; margin: 10px;">
+                    <p style="font-weight: bold">@item.Name</p>
+                    <p>@item.Description</p>
+                    <p>Fuel: @item.Fuel</p>
+                    <p>Cooldown seconds: @item.ActionCooldownSeconds sec</p>
+                    <p>Price: €@item.Price</p>
+                    <input type="hidden" value="@item.Id" asp-for="ItemId" />
+                    <input type="hidden" value="@Model.CurrentPlayer.Id" asp-for="CurrentPlayerId" />
+                    <input type="submit" class="btn btn-primary" value="Buy" />
+                </div>
+            </form>
         }
     }
 </div>
@@ -29,15 +32,18 @@
     {
         if (item.Attack != 0 && item.Name != "GOD MODE" && item.Name != "Developer Food")
         {
+            <form method="post">
             <div style="max-width: 200px; border-radius: 5px; border-style: solid; border-color: black;
     padding: 10px; margin: 10px;">
                 <p style="font-weight: bold">@item.Name</p>
                 <p>@item.Description</p>
                 <p>Attack: @item.Attack</p>
                 <p>Price: @item.Price €</p>
-                <input type="button" class="btn btn-primary" value="Buy"/>
+                    <input type="hidden" value="@item.Id" asp-for="ItemId" />
+                    <input type="hidden" value="@Model.CurrentPlayer.Id" asp-for="CurrentPlayerId" />
+                    <input type="submit" class="btn btn-primary" value="Buy" />
             </div>
-            
+            </form>
         }
     }
 </div>
@@ -48,15 +54,18 @@
     {
         if (item.Defense != 0 && item.Name != "GOD MODE" && item.Name != "Developer Food")
         {
+            <form method="post">
             <div style="max-width: 200px; border-radius: 5px; border-style: solid; border-color: black;
     padding: 10px; margin: 10px;">
                 <p style="font-weight: bold">@item.Name</p>
                 <p>@item.Description</p>
                 <p>Defense: @item.Defense</p>
                 <p>Price: @item.Price €</p>
-                <input type="button" class="btn btn-primary" value="Buy"/>
+                    <input type="hidden" value="@item.Id" asp-for="ItemId" />
+                    <input type="hidden" value="@Model.CurrentPlayer.Id" asp-for="CurrentPlayerId" />
+                    <input type="submit" class="btn btn-primary" value="Buy" />
             </div>
-            
+            </form>
         }
     }
 </div>
@@ -66,14 +75,17 @@
     {
         if (item.Fuel == 0 && item.Attack == 0 && item.Defense == 0 && item.Name != "GOD MODE" && item.Name != "Developer Food")
         {
+            <form method="post">
             <div style="max-width: 200px; border-radius: 5px; border-style: solid; border-color: black;
     padding: 10px; margin: 10px;">
                 <p style="font-weight: bold">@item.Name</p>
                 <p>@item.Description</p>
                 <p>Price: @item.Price €</p>
-                <input type="button" class="btn btn-primary" value="Buy"/>
+                    <input type="hidden" value="@item.Id" asp-for="ItemId" />
+                    <input type="hidden" value="@Model.CurrentPlayer.Id" asp-for="CurrentPlayerId" />
+                    <input type="submit" class="btn btn-primary" value="Buy" />
             </div>
-            
+            </form>
         }
     }
 </div>

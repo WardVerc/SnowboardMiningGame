@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using ActionCommandGame.Model;
 using ActionCommandGame.Services.Abstractions;
-using ActionCommandGame.Services.Model.Core;
-using ActionCommandGame.Services.Model.Results;
 using ActionCommandGame.Ui.WebApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -63,7 +58,6 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
                     Result = result
                 };
                 
-                //this model contains everything, just need to redirect WITH the model
                 return View("Index", model);
             }
             

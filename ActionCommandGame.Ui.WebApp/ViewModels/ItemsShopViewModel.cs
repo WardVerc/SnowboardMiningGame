@@ -7,5 +7,7 @@ namespace ActionCommandGame.Ui.WebApp.ViewModels
     {
         public IList<Item> AllItems { get; set; }
         public Player CurrentPlayer { get; set; }
+        public int ItemId { get; set; }
+        public int CurrentPlayerId { get; set; }
     }
 }
