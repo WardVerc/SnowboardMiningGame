@@ -161,6 +161,44 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index");
         }
+        
+        //Edit profile
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            var currentPlayer = _playerService.Find().SingleOrDefault(p => User.Identity != null && p.Name == User.Identity.Name);
+
+            return View(currentPlayer);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> Profile(Player newPlayer)
+        {
+            var currentPlayer = _playerService.Find().SingleOrDefault(p => User.Identity != null && p.Name == User.Identity.Name);
+            
+            if (currentPlayer != null)
+            {
+                //get the user via usermanager (= cookie stored in browser)
+                var user = await _userManager.FindByNameAsync(currentPlayer.Name);
+                
+                if (user != null)
+                {
+                    //update name of Identity
+                    user.UserName = newPlayer.Name;
+                    user.NormalizedUserName = newPlayer.Name.ToUpper();
+                    
+                    await _userManager.UpdateAsync(user);
+                    
+                    //log out
+                    await _signInManager.SignOutAsync();
+                
+                    //update name of Player
+                    _playerService.Update(currentPlayer.Id, newPlayer);
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
 
     }
 }

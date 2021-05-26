@@ -71,7 +71,30 @@ namespace ActionCommandGame.Services
 
         public Player Update(int id, Player player)
         {
-            throw new System.NotImplementedException();
+            //check if new playername already is in db
+            var searchPlayer = _database.Players.SingleOrDefault(p => p.Name == player.Name);
+            
+            if (searchPlayer != null)
+            {
+                Console.Write(player.Name + " is already in the db!");
+                
+                //return same object, should be an error message
+                return player;
+            }
+            else
+            {
+                //get logged in player
+                var loggedInPlayer = Get(id);
+                
+                //edit player properties
+                loggedInPlayer.Name = player.Name;
+                
+                //save in db
+                _database.Players.Update(loggedInPlayer);
+                _database.SaveChanges();
+            
+                return loggedInPlayer;
+            }
         }
 
         public bool Delete(int id)

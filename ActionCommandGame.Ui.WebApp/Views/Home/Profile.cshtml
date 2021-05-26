@@ -1,0 +1,13 @@
+﻿@model ActionCommandGame.Model.Player;
+
+<h3>Change your name</h3>
+<br/>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="@Model.Name"></label>
+        <input type="text" asp-for="@Model.Name" name="name" value="@Model.Name"/>
+        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+        <input type="submit" asp-action="Profile" value="Save" />
+    </div>
+</form>
