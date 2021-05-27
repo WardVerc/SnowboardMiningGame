@@ -11,5 +11,6 @@ namespace ActionCommandGame.Services.Abstractions
         ServiceResult<PlayerItem> Create(int playerId, int itemId);
         PlayerItem Update(int id, PlayerItem playerItem);
         ServiceResult Delete(int id);
+        IList<PlayerItem> FindByItem(int? itemId = null);
     }
 }

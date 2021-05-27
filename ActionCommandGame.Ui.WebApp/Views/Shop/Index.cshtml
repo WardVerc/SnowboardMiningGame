@@ -3,7 +3,7 @@
 <h1>This is the shop!</h1>
 <h5>Your current balance: @Model.CurrentPlayer.Money €</h5>
 
-<h3>Fuel</h3>
+<h3 style="margin-top: 30px;">Fuel</h3>
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
     @foreach (var item in Model.AllItems)
     {
@@ -26,7 +26,7 @@
     }
 </div>
 
-<h3>Attack</h3>
+<h3 style="margin-top: 30px;">Snowboards</h3>
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
     @foreach (var item in Model.AllItems)
     {
@@ -48,32 +48,33 @@
     }
 </div>
 
-<h3>Defense</h3>
+<h3 style="margin-top: 30px;">Snowboard Gear</h3>
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
     @foreach (var item in Model.AllItems)
     {
         if (item.Defense != 0 && item.Name != "GOD MODE" && item.Name != "Developer Food")
         {
             <form method="post">
-            <div style="max-width: 200px; border-radius: 5px; border-style: solid; border-color: black;
+                <div style="max-width: 200px; border-radius: 5px; border-style: solid; border-color: black;
     padding: 10px; margin: 10px;">
-                <p style="font-weight: bold">@item.Name</p>
-                <p>@item.Description</p>
-                <p>Defense: @item.Defense</p>
-                <p>Price: @item.Price €</p>
+                    <p style="font-weight: bold">@item.Name</p>
+                    <p>@item.Description</p>
+                    <p>Defense: @item.Defense</p>
+                    <p>Price: @item.Price €</p>
                     <input type="hidden" value="@item.Id" asp-for="ItemId" />
                     <input type="hidden" value="@Model.CurrentPlayer.Id" asp-for="CurrentPlayerId" />
                     <input type="submit" class="btn btn-primary" value="Buy" />
-            </div>
+                </div>
             </form>
         }
     }
 </div>
-<h3>Other</h3>
+
+<h3 style="margin-top: 30px;">Other</h3>
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
     @foreach (var item in Model.AllItems)
     {
-        if (item.Fuel == 0 && item.Attack == 0 && item.Defense == 0 && item.Name != "GOD MODE" && item.Name != "Developer Food")
+        if (item.Fuel == 0 && item.Attack == 0 && item.Defense == 0)
         {
             <form method="post">
             <div style="max-width: 200px; border-radius: 5px; border-style: solid; border-color: black;

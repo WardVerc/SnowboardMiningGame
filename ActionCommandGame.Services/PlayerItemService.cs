@@ -38,6 +38,22 @@ namespace ActionCommandGame.Services
 
             return query.ToList();
         }
+        
+        public IList<PlayerItem> FindByItem(int? itemId = null)
+        {
+            var query = _database.PlayerItems.AsQueryable();
+
+            if (itemId.HasValue)
+            {
+                query = query
+                    .Where(pi => pi.ItemId == itemId.Value);
+
+            }
+
+
+
+            return query.ToList();
+        }
 
         public ServiceResult<PlayerItem> Create(int playerId, int itemId)
         {
@@ -103,10 +119,12 @@ namespace ActionCommandGame.Services
                 return new ServiceResult().NotFound();
             }
             
-            var player = playerItem.Player;
+            //had to change "var player = playerItem.Player" to this
+            var player = _database.Players.SingleOrDefault(p => p.Id == playerItem.PlayerId);
             player.Inventory.Remove(playerItem);
             
-            var item = playerItem.Item;
+            //same for item
+            var item = _database.Items.SingleOrDefault(i => i.Id == playerItem.ItemId);
             item.PlayerItems.Remove(playerItem);
 
             //Clear up equipment

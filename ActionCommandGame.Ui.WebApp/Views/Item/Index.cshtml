@@ -2,42 +2,245 @@
 
 <h3>Item Management</h3>
 
+@* @if (Model.AllItems != null) *@
+@* { *@
+@*     <table> *@
+@*         <tr> *@
+@*             <th>Name</th> *@
+@*             <th>Description</th> *@
+@*             <th>Attack</th> *@
+@*             <th>Defense</th> *@
+@*             <th>Fuel</th> *@
+@*             <th>Cooldown seconds</th> *@
+@*             <th>Price</th> *@
+@*             <th style="width: 170px;">Actions</th> *@
+@*         </tr> *@
+@*          *@
+@*         @foreach (var item in Model.AllItems) *@
+@*         { *@
+@*             <tr> *@
+@*                 <td>@item.Name</td> *@
+@*                 <td>@item.Description</td> *@
+@*                 <td>@item.Attack</td> *@
+@*                 <td>@item.Defense</td> *@
+@*                 <td>@item.Fuel</td> *@
+@*                 <td>@item.ActionCooldownSeconds</td> *@
+@*                 <td>@item.Price</td> *@
+@*                 <td style="display: flex;"> *@
+@*                     <form method="get"> *@
+@*                         <input type="hidden" asp-for="ItemId" value="@item.Id"/> *@
+@*                         <input type="submit" asp-action="Edit" value="Edit" class="btn btn-secondary m-1"/> *@
+@*                     </form> *@
+@*                     <form method="post"> *@
+@*                         <input type="hidden" asp-for="ItemId" value="@item.Id"/> *@
+@*                         <input type="submit" asp-action="Delete" value="Delete" class="btn btn-danger m-1"/> *@
+@*                     </form> *@
+@*                 </td> *@
+@*             </tr> *@
+@*          *@
+@*         } *@
+@*     </table> *@
+@* } *@
+
+<h4 style="margin-top: 50px;">Fuel</h4>
+
 @if (Model.AllItems != null)
 {
-    <table>
+    <table style="width:100%">
         <tr>
             <th>Name</th>
-            <th>Description</th>
-            <th>Attack</th>
-            <th>Defense</th>
             <th>Fuel</th>
             <th>Cooldown seconds</th>
             <th>Price</th>
             <th style="width: 170px;">Actions</th>
         </tr>
         
-    @foreach (var item in Model.AllItems)
-    {
+        @foreach (var item in Model.AllItems)
+        {
+            if (item.Fuel != 0 && item.Name != "GOD MODE" && item.Name != "Developer Food")
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Fuel</td>
+                    <td>@item.ActionCooldownSeconds</td>
+                    <td>@item.Price</td>
+                    <td style="display: flex;">
+                        <form method="get">
+                            <input type="hidden" asp-for="ItemId" value="@item.Id"/>
+                            <input type="submit" asp-action="Edit" value="Edit" class="btn btn-secondary m-1"/>
+                        </form>
+                        <form method="post">
+                            <input type="hidden" asp-for="ItemId" value="@item.Id"/>
+                            <input type="submit" asp-action="Delete" value="Delete" class="btn btn-danger m-1"/>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        <tr style="height: 30px;"></tr>
         <tr>
-            <td>@item.Name</td>
-            <td>@item.Description</td>
-            <td>@item.Attack</td>
-            <td>@item.Defense</td>
-            <td>@item.Fuel</td>
-            <td>@item.ActionCooldownSeconds</td>
-            <td>@item.Price</td>
-            <td style="display: flex;">
-                <form method="get">
-                    <input type="hidden" asp-for="ItemId" value="@item.Id"/>
-                    <input type="submit" asp-action="Edit" value="Edit" class="btn btn-secondary m-1"/>
-                </form>
-                <form method="post">
-                    <input type="hidden" asp-for="ItemId" value="@item.Id"/>
-                    <input type="submit" asp-action="Delete" value="Delete" class="btn btn-danger m-1"/>
-                </form>
-            </td>
+            <form method="post">
+                <td><input placeholder="Name" asp-for="Item.Name" /></td>
+                <td><input placeholder="Fuel" asp-for="Item.Fuel" /></td>
+                <td><input placeholder="Cooldown seconds" asp-for="Item.ActionCooldownSeconds" /></td>
+                <td><input placeholder="Price" asp-for="Item.Price" /></td>
+                <td>
+                    <input type="hidden" asp-for="Item.Attack" value="0"/>
+                    <input type="hidden" asp-for="Item.Defense" value="0"/>
+                    <input type="submit" asp-action="Create" value="Add new item" class="btn btn-primary m-1"/>
+                </td>
+            </form>
+        </tr>
+    </table>
+}
+
+<h4 style="margin-top: 50px;">Snowboards</h4>
+
+@if (Model.AllItems != null)
+{
+    <table style="width:100%">
+        <tr>
+            <th>Name</th>
+            <th>Attack</th>
+            <th>Price</th>
+            <th style="width: 170px;">Actions</th>
         </tr>
         
-    }
+        @foreach (var item in Model.AllItems)
+        {
+            if (item.Attack != 0 && item.Name != "GOD MODE" && item.Name != "Developer Food")
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Attack</td>
+                    <td>@item.Price</td>
+                    <td style="display: flex;">
+                        <form method="get">
+                            <input type="hidden" asp-for="ItemId" value="@item.Id"/>
+                            <input type="submit" asp-action="Edit" value="Edit" class="btn btn-secondary m-1"/>
+                        </form>
+                        <form method="post">
+                            <input type="hidden" asp-for="ItemId" value="@item.Id"/>
+                            <input type="submit" asp-action="Delete" value="Delete" class="btn btn-danger m-1"/>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        <tr style="height: 30px;"></tr>
+        <tr>
+            <form method="post">
+                <td><input placeholder="Name" asp-for="Item.Name" /></td>
+                <td><input placeholder="Attack" asp-for="Item.Attack" /></td>
+                <td><input placeholder="Price" asp-for="Item.Price" /></td>
+                <td>
+                    <input type="hidden" asp-for="Item.Fuel" value="0"/>
+                    <input type="hidden" asp-for="Item.Defense" value="0"/>
+                    <input type="hidden" asp-for="Item.ActionCooldownSeconds" value="0"/>
+                    <input type="submit" asp-action="Create" value="Add new item" class="btn btn-primary m-1"/>
+                </td>
+            </form>
+        </tr>
+    </table>
+}
+
+<h4 style="margin-top: 50px;">Snowboard Gear</h4>
+
+@if (Model.AllItems != null)
+{
+    <table style="width:100%">
+        <tr>
+            <th>Name</th>
+            <th>Defense</th>
+            <th>Price</th>
+            <th style="width: 170px;">Actions</th>
+        </tr>
+        
+        @foreach (var item in Model.AllItems)
+        {
+            if (item.Defense != 0 && item.Name != "GOD MODE" && item.Name != "Developer Food")
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Defense</td>
+                    <td>@item.Price</td>
+                    <td style="display: flex;">
+                        <form method="get">
+                            <input type="hidden" asp-for="ItemId" value="@item.Id"/>
+                            <input type="submit" asp-action="Edit" value="Edit" class="btn btn-secondary m-1"/>
+                        </form>
+                        <form method="post">
+                            <input type="hidden" asp-for="ItemId" value="@item.Id"/>
+                            <input type="submit" asp-action="Delete" value="Delete" class="btn btn-danger m-1"/>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        <tr style="height: 30px;"></tr>
+        <tr>
+            <form method="post">
+                <td><input placeholder="Name" asp-for="Item.Name" /></td>
+                <td><input placeholder="Defense" asp-for="Item.Defense" /></td>
+                <td><input placeholder="Price" asp-for="Item.Price" /></td>
+                <td>
+                    <input type="hidden" asp-for="Item.Fuel" value="0"/>
+                    <input type="hidden" asp-for="Item.Attack" value="0"/>
+                    <input type="hidden" asp-for="Item.ActionCooldownSeconds" value="0"/>
+                    <input type="submit" asp-action="Create" value="Add new item" class="btn btn-primary m-1"/>
+                </td>
+            </form>
+        </tr>
+    </table>
+}
+
+<h4 style="margin-top: 50px;">Other</h4>
+
+@if (Model.AllItems != null)
+{
+    <table style="width:100%">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th style="width: 170px;">Actions</th>
+        </tr>
+        
+        @foreach (var item in Model.AllItems)
+        {
+            if (item.Fuel == 0 && item.Attack == 0 && item.Defense == 0)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.Price</td>
+                    <td style="display: flex;">
+                        <form method="get">
+                            <input type="hidden" asp-for="ItemId" value="@item.Id"/>
+                            <input type="submit" asp-action="Edit" value="Edit" class="btn btn-secondary m-1"/>
+                        </form>
+                        <form method="post">
+                            <input type="hidden" asp-for="ItemId" value="@item.Id"/>
+                            <input type="submit" asp-action="Delete" value="Delete" class="btn btn-danger m-1"/>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        <tr style="height: 30px;"></tr>
+        <tr>
+            <form method="post">
+                <td><input placeholder="Name" asp-for="Item.Name" /></td>
+                <td><input placeholder="Description" asp-for="Item.Description" /></td>
+                <td><input placeholder="Price" asp-for="Item.Price" /></td>
+                <td>
+                    <input type="hidden" asp-for="Item.Fuel" value="0"/>
+                    <input type="hidden" asp-for="Item.Defense" value="0"/>
+                    <input type="hidden" asp-for="Item.Attack" value="0"/>
+                    <input type="hidden" asp-for="Item.ActionCooldownSeconds" value="0"/>
+                    <input type="submit" asp-action="Create" value="Add new item" class="btn btn-primary m-1"/>
+                </td>
+            </form>
+        </tr>
     </table>
 }

@@ -28,17 +28,68 @@ namespace ActionCommandGame.Services
 
         public Item Create(Item item)
         {
-            throw new NotImplementedException();
+            //check if item already is in db
+            var searchItem = _database.Items.SingleOrDefault(p => p.Name == item.Name);
+
+            if (searchItem != null)
+            {
+                Console.Write(item.Name + " is already in the db!");
+                
+                //return same object
+                return item;
+            }
+            else
+            {
+                //save in db
+                _database.Items.Add(item);
+                _database.SaveChanges();
+                Console.Write("New item added to db: " + item.Name + ". ");
+
+                //return the new item
+                return item;
+            }
         }
 
         public Item Update(int id, Item item)
         {
-            throw new NotImplementedException();
+            if (_database.Items.Count(i => i.Name == item.Name) > 1)
+            {
+                Console.Write(item.Name + " is already in the db!");
+                
+                return item;
+            } else
+            {
+                var dbItem = Get(id);
+                if (dbItem != null)
+                {
+                    dbItem.Name = item.Name;
+                    dbItem.Description = item.Description;
+                    dbItem.Fuel = item.Fuel;
+                    dbItem.Attack = item.Attack;
+                    dbItem.Defense = item.Defense;
+                    dbItem.Price = item.Price;
+                    dbItem.ActionCooldownSeconds = item.ActionCooldownSeconds;
+
+                    _database.Items.Update(dbItem);
+                    _database.SaveChanges();
+                }
+            }
+
+            return item;
         }
 
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            var searchItem = _database.Items.SingleOrDefault(p => p.Id == id);
+            if (searchItem != null)
+            {
+                _database.Items.Remove(searchItem);
+                _database.SaveChanges();
+
+                return true;
+            }
+
+            return false;
         }
     }
 }
