@@ -35,7 +35,26 @@ namespace ActionCommandGame.Services
 
         public NegativeGameEvent Create(NegativeGameEvent gameEvent)
         {
-            throw new NotImplementedException();
+            //check if event already is in db
+            var searchEvent = _database.NegativeGameEvents.SingleOrDefault(p => p.Name == gameEvent.Name);
+
+            if (searchEvent != null)
+            {
+                Console.Write(gameEvent.Name + " is already in the db!");
+                
+                //return same object
+                return gameEvent;
+            }
+            else
+            {
+                //save in db
+                _database.NegativeGameEvents.Add(gameEvent);
+                _database.SaveChanges();
+                Console.Write("New event added to db: " + gameEvent.Name + ". ");
+                
+                //return the new event
+                return gameEvent;
+            }
         }
 
         public NegativeGameEvent Update(int id, NegativeGameEvent gameEvent)

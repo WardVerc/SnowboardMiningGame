@@ -1,0 +1,19 @@
+﻿@model IList<ActionCommandGame.Model.Player>;
+
+<h3>Leaderboards</h3>
+
+<table style="width: 100%;">
+    <tr>
+        <th>Name</th>
+        <th>Money</th>
+        <th>Experience</th>
+    </tr>
+    @foreach (var player in Model)
+    {
+        <tr>
+            <td>@player.Name</td>
+            <td>@player.Money</td>
+            <td>@player.Experience</td>
+        </tr>
+    }
+</table>

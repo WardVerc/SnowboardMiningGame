@@ -63,6 +63,12 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             
             return RedirectToAction("Index");
         }
+
+        public IActionResult Leaderboards()
+        {
+            var playerList = _playerService.Find().OrderByDescending(p => p.Experience).ToList();
+            return View(playerList);
+        }
         
         
         

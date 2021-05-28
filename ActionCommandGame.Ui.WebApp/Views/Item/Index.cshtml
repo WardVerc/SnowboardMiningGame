@@ -2,46 +2,6 @@
 
 <h3>Item Management</h3>
 
-@* @if (Model.AllItems != null) *@
-@* { *@
-@*     <table> *@
-@*         <tr> *@
-@*             <th>Name</th> *@
-@*             <th>Description</th> *@
-@*             <th>Attack</th> *@
-@*             <th>Defense</th> *@
-@*             <th>Fuel</th> *@
-@*             <th>Cooldown seconds</th> *@
-@*             <th>Price</th> *@
-@*             <th style="width: 170px;">Actions</th> *@
-@*         </tr> *@
-@*          *@
-@*         @foreach (var item in Model.AllItems) *@
-@*         { *@
-@*             <tr> *@
-@*                 <td>@item.Name</td> *@
-@*                 <td>@item.Description</td> *@
-@*                 <td>@item.Attack</td> *@
-@*                 <td>@item.Defense</td> *@
-@*                 <td>@item.Fuel</td> *@
-@*                 <td>@item.ActionCooldownSeconds</td> *@
-@*                 <td>@item.Price</td> *@
-@*                 <td style="display: flex;"> *@
-@*                     <form method="get"> *@
-@*                         <input type="hidden" asp-for="ItemId" value="@item.Id"/> *@
-@*                         <input type="submit" asp-action="Edit" value="Edit" class="btn btn-secondary m-1"/> *@
-@*                     </form> *@
-@*                     <form method="post"> *@
-@*                         <input type="hidden" asp-for="ItemId" value="@item.Id"/> *@
-@*                         <input type="submit" asp-action="Delete" value="Delete" class="btn btn-danger m-1"/> *@
-@*                     </form> *@
-@*                 </td> *@
-@*             </tr> *@
-@*          *@
-@*         } *@
-@*     </table> *@
-@* } *@
-
 <h4 style="margin-top: 50px;">Fuel</h4>
 
 @if (Model.AllItems != null)

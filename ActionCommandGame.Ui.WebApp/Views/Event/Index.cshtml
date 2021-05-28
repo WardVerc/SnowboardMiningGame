@@ -1,3 +1,51 @@
 ﻿@model ActionCommandGame.Ui.WebApp.ViewModels.EventManagementViewModel;
 
 <h3>Event Management</h3>
+
+<h4 style="margin-top: 50px;">Positive Game Events</h4>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Money</th>
+        <th>Experience</th>
+        <th>Probability</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var gameEvent in Model.AllPositiveGameEvents)
+    {
+        <tr>
+            <td>@gameEvent.Name</td>
+            <td>@gameEvent.Description</td>
+            <td>@gameEvent.Money</td>
+            <td>@gameEvent.Experience</td>
+            <td>@gameEvent.Probability</td>
+            <td style="display: flex;">
+                <form method="get">
+                    <input type="hidden" asp-for="PositiveEventId" value="@gameEvent.Id"/>
+                    <input type="submit" asp-action="EditPositive" value="Edit" class="btn btn-secondary m-1"/>
+                </form>
+                <form method="post">
+                    <input type="hidden" asp-for="PositiveEventId" value="@gameEvent.Id"/>
+                    <input type="submit" asp-action="DeletePositive" value="Delete" class="btn btn-danger m-1"/>
+                </form>
+            </td>
+        </tr>
+    }
+    <tr style="height: 30px;"></tr>
+            <tr>
+                <form method="post">
+                    <td><input placeholder="Name" asp-for="PositiveGameEvent.Name" /></td>
+                    <td><input placeholder="Description" asp-for="PositiveGameEvent.Description" /></td>
+                    <td><input placeholder="Money" asp-for="PositiveGameEvent.Money" /></td>
+                    <td><input placeholder="Experience" asp-for="PositiveGameEvent.Experience" /></td>
+                    <td><input placeholder="Probability" asp-for="PositiveGameEvent.Probability" /></td>
+                    <td>
+                        <input type="submit" asp-action="Create" value="Add new event" class="btn btn-primary m-1"/>
+                    </td>
+                </form>
+            </tr>
+</table>
+
+
+<h4 style="margin-top: 50px;">Negative Game Events</h4>

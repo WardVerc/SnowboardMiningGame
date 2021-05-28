@@ -19,7 +19,7 @@ namespace ActionCommandGame.Services
 
         public PositiveGameEvent Get(int id)
         {
-            throw new NotImplementedException();
+            return _database.PositiveGameEvents.SingleOrDefault(i => i.Id == id);
         }
 
         public PositiveGameEvent GetRandomPositiveGameEvent(bool hasAttackItem)
@@ -44,17 +44,66 @@ namespace ActionCommandGame.Services
 
         public PositiveGameEvent Create(PositiveGameEvent gameEvent)
         {
-            throw new NotImplementedException();
+            //check if event already is in db
+            var searchEvent = _database.PositiveGameEvents.SingleOrDefault(p => p.Name == gameEvent.Name);
+
+            if (searchEvent != null)
+            {
+                Console.Write(gameEvent.Name + " is already in the db!");
+                
+                //return same object
+                return gameEvent;
+            }
+            else
+            {
+                //save in db
+                _database.PositiveGameEvents.Add(gameEvent);
+                _database.SaveChanges();
+                Console.Write("New event added to db: " + gameEvent.Name + ". ");
+                
+                //return the new event
+                return gameEvent;
+            }
         }
 
         public PositiveGameEvent Update(int id, PositiveGameEvent gameEvent)
         {
-            throw new NotImplementedException();
+            if (_database.PositiveGameEvents.Count(i => i.Name == gameEvent.Name) > 1)
+            {
+                Console.Write(gameEvent.Name + " is already in the db!");
+                
+                return gameEvent;
+            } else
+            {
+                var dbEvent = Get(id);
+                if (dbEvent != null)
+                {
+                    dbEvent.Name = gameEvent.Name;
+                    dbEvent.Description = gameEvent.Description;
+                    dbEvent.Money = gameEvent.Money;
+                    dbEvent.Experience = gameEvent.Experience;
+                    dbEvent.Probability = gameEvent.Probability;
+
+                    _database.PositiveGameEvents.Update(dbEvent);
+                    _database.SaveChanges();
+                }
+            }
+
+            return gameEvent;
         }
 
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            var searchEvent = Get(id);
+            if (searchEvent != null)
+            {
+                _database.PositiveGameEvents.Remove(searchEvent);
+                _database.SaveChanges();
+
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -7,6 +7,9 @@ namespace ActionCommandGame.Ui.WebApp.ViewModels
     {
         public IList<PositiveGameEvent> AllPositiveGameEvents { get; set; }
         public IList<NegativeGameEvent> AllNegativeGameEvents { get; set; }
-        public int EventId { get; set; }
+        public PositiveGameEvent PositiveGameEvent { get; set; }
+        public NegativeGameEvent NegativeGameEvent { get; set; }
+        public int PositiveEventId { get; set; }
+        public int NegativeEventId { get; set; }
     }
 }
