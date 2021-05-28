@@ -70,6 +70,29 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             return RedirectToAction("Index");
         }
         
+        [HttpGet]
+        public IActionResult EditNegative(int negativeEventId)
+        {
+            var searchEvent = _negativeGameEventService.Get(negativeEventId);
+            if (searchEvent != null)
+            {
+                return View(searchEvent);
+            }
+
+            return RedirectToAction("Index");
+        }
+        
+        [HttpPost]
+        public IActionResult EditNegative(NegativeGameEvent gameEvent)
+        {
+            if (gameEvent != null)
+            {
+                _negativeGameEventService.Update(gameEvent.Id, gameEvent);
+            }
+
+            return RedirectToAction("Index");
+        }
+        
         [HttpPost]
         public IActionResult DeletePositive(int positiveEventId)
         {
@@ -81,6 +104,22 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             else
             {
                 _positiveGameEventService.Delete(positiveEventId);
+            }
+
+            return RedirectToAction("Index");
+        }
+        
+        [HttpPost]
+        public IActionResult DeleteNegative(int negativeEventId)
+        {
+            var searchEvent = _negativeGameEventService.Get(negativeEventId);
+            if (searchEvent == null)
+            {
+                Console.Write("Negative event id was not found in db! " + negativeEventId);
+            }
+            else
+            {
+                _negativeGameEventService.Delete(negativeEventId);
             }
 
             return RedirectToAction("Index");

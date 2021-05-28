@@ -49,3 +49,50 @@
 
 
 <h4 style="margin-top: 50px;">Negative Game Events</h4>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>DefenseWithGearDescription</th>
+        <th>DefenseWithoutGearDescription</th>
+        <th>DefenseLoss</th>
+        <th>Probability</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var gameEvent in Model.AllNegativeGameEvents)
+    {
+        <tr>
+            <td>@gameEvent.Name</td>
+            <td>@gameEvent.Description</td>
+            <td>@gameEvent.DefenseWithGearDescription</td>
+            <td>@gameEvent.DefenseWithoutGearDescription</td>
+            <td>@gameEvent.DefenseLoss</td>
+            <td>@gameEvent.Probability</td>
+            <td style="display: flex;">
+                <form method="get">
+                    <input type="hidden" asp-for="NegativeEventId" value="@gameEvent.Id"/>
+                    <input type="submit" asp-action="EditNegative" value="Edit" class="btn btn-secondary m-1"/>
+                </form>
+                <form method="post">
+                    <input type="hidden" asp-for="NegativeEventId" value="@gameEvent.Id"/>
+                    <input type="submit" asp-action="DeleteNegative" value="Delete" class="btn btn-danger m-1"/>
+                </form>
+            </td>
+        </tr>
+    }
+    <tr style="height: 30px;"></tr>
+    <tr>
+        <form method="post">
+            <td><input placeholder="Name" asp-for="NegativeGameEvent.Name" /></td>
+            <td><input placeholder="Description" asp-for="NegativeGameEvent.Description" /></td>
+            <td><input placeholder="DefenseWithGearDescription" asp-for="NegativeGameEvent.DefenseWithGearDescription" /></td>
+            <td><input placeholder="DefenseWithoutGearDescription" asp-for="NegativeGameEvent.DefenseWithoutGearDescription" /></td>
+            <td><input placeholder="DefenseLoss" asp-for="NegativeGameEvent.DefenseLoss" /></td>
+            <td><input placeholder="Probability" asp-for="NegativeGameEvent.Probability" /></td>
+            <td>
+                <input type="submit" asp-action="Create" value="Add new event" class="btn btn-primary m-1"/>
+            </td>
+        </form>
+    </tr>
+</table>
