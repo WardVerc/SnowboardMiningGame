@@ -13,21 +13,20 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IPlayerService _playerService;
         private readonly IGameService _gameService;
 
         public HomeController(UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager, IPlayerService playerService, IGameService gameService)
+            SignInManager<IdentityUser> signInManager, IPlayerService playerService, IGameService gameService, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _playerService = playerService;
             _gameService = gameService;
+            _roleManager = roleManager;
         }
 
-        //Authorize, so this page is only accessable when user is logged in
-        //logged in = cookie is found with correct user+password combo
-        //is done via app.UseAuthentication() in Startup.cs
         [Authorize]
         public IActionResult Index(PlayerGameresultViewModel model)
         {
@@ -38,6 +37,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             return View(model);
         }
         
+        [Authorize]
         public IActionResult HitButton()
         {
             var currentPlayer = _playerService.Find().SingleOrDefault(p => User.Identity != null && p.Name == User.Identity.Name);
@@ -64,6 +64,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult Leaderboards()
         {
             var playerList = _playerService.Find().OrderByDescending(p => p.Experience).ToList();
@@ -121,13 +122,13 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                //create new user for in the cookie - to store in the browser
+                //create new user for in the cookie
                 var user = new IdentityUser()
                 {
                     UserName = player.Name
                 };
 
-                //create new cookie and store the username+password combo in the cookie and save cookie in the browser
+                //create new cookie and store the username+password combo in the cookie
                 var result = await _userManager.CreateAsync(user, player.Password);
 
                 if (result.Succeeded)
@@ -164,11 +165,24 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
         //Log out
         public async Task<IActionResult> LogOut()
         {
-            await _signInManager.SignOutAsync();
+            var currentIdentityUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            
+            //uncomment following line to add Admin role on Logout
+            //await _roleManager.CreateAsync(new IdentityRole("Admin"));
+
+            if (currentIdentityUser != null)
+            {
+                //uncomment following line to add Admin role on Logout
+                //await _userManager.AddToRoleAsync(currentIdentityUser, "Admin");
+                
+                await _signInManager.SignOutAsync();
+            }
+            
             return RedirectToAction("Index");
         }
         
         //Edit profile
+        [Authorize]
         [HttpGet]
         public IActionResult Profile()
         {
@@ -177,6 +191,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             return View(currentPlayer);
         }
         
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Profile(Player newPlayer)
         {

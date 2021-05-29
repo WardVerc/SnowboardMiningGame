@@ -2,6 +2,7 @@
 using ActionCommandGame.Model;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Ui.WebApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ActionCommandGame.Ui.WebApp.Controllers
@@ -17,7 +18,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             _playerItemService = playerItemService;
         }
         
-        // GET
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             //Get all items from db
@@ -31,6 +32,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Create(ItemManagementViewModel model)
         {
@@ -43,6 +45,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Edit(int itemId)
         {
@@ -50,6 +53,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             return View(item);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Edit(Item item)
         {
@@ -61,6 +65,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Delete(int itemId)
         {

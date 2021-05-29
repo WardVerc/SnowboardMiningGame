@@ -3,6 +3,7 @@ using System.Linq;
 using ActionCommandGame.Model;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Ui.WebApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ActionCommandGame.Ui.WebApp.Controllers
@@ -19,7 +20,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             _negativeGameEventService = negativeGameEventService;
         }
         
-        // GET
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             var model = new EventManagementViewModel()
@@ -31,6 +32,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             return View(model);
         }
         
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Create(EventManagementViewModel model)
         {
@@ -47,6 +49,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult EditPositive(int positiveEventId)
         {
@@ -59,6 +62,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             return RedirectToAction("Index");
         }
         
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult EditPositive(PositiveGameEvent gameEvent)
         {
@@ -70,6 +74,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             return RedirectToAction("Index");
         }
         
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult EditNegative(int negativeEventId)
         {
@@ -82,6 +87,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             return RedirectToAction("Index");
         }
         
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult EditNegative(NegativeGameEvent gameEvent)
         {
@@ -93,6 +99,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             return RedirectToAction("Index");
         }
         
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult DeletePositive(int positiveEventId)
         {
@@ -109,6 +116,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             return RedirectToAction("Index");
         }
         
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult DeleteNegative(int negativeEventId)
         {

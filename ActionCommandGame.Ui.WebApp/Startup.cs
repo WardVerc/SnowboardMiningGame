@@ -55,6 +55,7 @@ namespace ActionCommandGame.Ui.WebApp
                     config.Password.RequireNonAlphanumeric = false;
                     config.Password.RequiredLength = 4;
                 })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ActionButtonGameDbContext>()
                 .AddDefaultTokenProviders();
 
