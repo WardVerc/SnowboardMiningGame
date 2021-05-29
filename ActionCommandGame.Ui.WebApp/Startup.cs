@@ -1,16 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
 using ActionCommandGame.Services;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Settings;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,7 +24,7 @@ namespace ActionCommandGame.Ui.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //add appsettings (still need to add the appsettings.json file no?)
+            //add appsettings
             var appSettings = new AppSettings();
             Configuration.Bind(nameof(AppSettings), appSettings);
 
@@ -44,10 +37,9 @@ namespace ActionCommandGame.Ui.WebApp
                 config.UseSqlServer(Configuration.GetConnectionString("Default"), 
                     b => b.MigrationsAssembly("ActionCommandGame.Ui.WebApp"));
             });
-
             
             //Identity to create users -> register and logging in
-            //need to extend identityUser with player, and role
+            //also add Roles, for Admin users etc.
             services.AddDefaultIdentity<IdentityUser>(config =>
                 {
                     config.Password.RequireDigit = false;
@@ -59,7 +51,7 @@ namespace ActionCommandGame.Ui.WebApp
                 .AddEntityFrameworkStores<ActionButtonGameDbContext>()
                 .AddDefaultTokenProviders();
 
-            //Cookie for logging in is saved in browser
+            //Cookie for logging in
             services.ConfigureApplicationCookie(config =>
             {
                 config.Cookie.Name = "Identity.Cookie";

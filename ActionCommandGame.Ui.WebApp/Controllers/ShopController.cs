@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using ActionCommandGame.Model;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Ui.WebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -19,6 +18,7 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             _playerService = playerService;
             _gameService = gameService;
         }
+        
         [Authorize]
         [HttpGet]
         public IActionResult Index()
@@ -45,12 +45,13 @@ namespace ActionCommandGame.Ui.WebApp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Index(ItemsShopViewModel model)
         {
             if (model.ItemId != 0 && model.CurrentPlayerId != 0)
             {
-                var result = _gameService.Buy(model.CurrentPlayerId, model.ItemId);
+                _gameService.Buy(model.CurrentPlayerId, model.ItemId);
                 
             }
             return RedirectToAction("Index");

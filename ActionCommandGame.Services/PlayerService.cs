@@ -37,9 +37,6 @@ namespace ActionCommandGame.Services
 
         public Player Create(Player player)
         {
-            //new player so we only need a name
-            //-> name is validated in front end
-            
             //check if player already is in db
             var searchPlayer = _database.Players.SingleOrDefault(p => p.Name == player.Name);
 

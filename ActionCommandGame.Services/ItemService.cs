@@ -52,7 +52,7 @@ namespace ActionCommandGame.Services
 
         public Item Update(int id, Item item)
         {
-            if (_database.Items.Count(i => i.Name == item.Name) > 1)
+            if (Find().Count(i => i.Name == item.Name) > 1)
             {
                 Console.Write(item.Name + " is already in the db!");
                 
@@ -80,7 +80,7 @@ namespace ActionCommandGame.Services
 
         public bool Delete(int id)
         {
-            var searchItem = _database.Items.SingleOrDefault(p => p.Id == id);
+            var searchItem = Get(id);
             if (searchItem != null)
             {
                 _database.Items.Remove(searchItem);

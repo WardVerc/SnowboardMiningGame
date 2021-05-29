@@ -17,8 +17,7 @@ namespace ActionCommandGame.Repository
         public DbSet<Item> Items { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<PlayerItem> PlayerItems { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<PlayerRole> PlayerRoles { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

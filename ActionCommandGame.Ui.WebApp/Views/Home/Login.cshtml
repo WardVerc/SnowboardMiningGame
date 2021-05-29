@@ -2,8 +2,6 @@
 
 <h1>Login</h1>
 
-<p>Login here</p>
-
 <form method="post">
     <div class="form-group">
         <label asp-for="@Model.Name"></label>
@@ -12,7 +10,7 @@
     </div>
     <div class="form-group">
     <label asp-for="@Model.Password"></label>
-    <input type="text" asp-for="@Model.Password" name="password" value=""/>
+    <input type="password" asp-for="@Model.Password" name="password" value=""/>
     <span asp-validation-for="@Model.Password" class="text-danger"></span>
         </div>
     <input type="submit" asp-action="Login" value="Login" />

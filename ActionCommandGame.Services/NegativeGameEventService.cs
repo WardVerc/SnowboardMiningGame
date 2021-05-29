@@ -59,7 +59,7 @@ namespace ActionCommandGame.Services
 
         public NegativeGameEvent Update(int id, NegativeGameEvent gameEvent)
         {
-            if (_database.NegativeGameEvents.Count(i => i.Name == gameEvent.Name) > 1)
+            if (Find().Count(i => i.Name == gameEvent.Name) > 1)
             {
                 Console.Write(gameEvent.Name + " is already in the db!");
                 
