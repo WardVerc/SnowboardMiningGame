@@ -3,14 +3,14 @@
 <h1 style="margin-bottom: 30px;">Welcome to the shop!</h1>
 <h5>Your current balance: @Model.CurrentPlayer.Money €</h5>
 
-<h3 style="margin-top: 30px;">Fuel</h3>
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+<h3 style="margin-top: 30px;">Food</h3>
+<div style="display: flex; flex-wrap: wrap;">
     @foreach (var item in Model.AllItems)
     {
         if (item.Fuel != 0 && item.Name != "GOD MODE" && item.Name != "Developer Food")
         {
             <form method="post">
-                <div style="max-width: 200px; border-radius: 5px; border-style: solid; border-color: black;
+                <div style="width: 200px; border-radius: 5px; border-style: solid; border-color: black;
                     padding: 10px; margin: 10px;">
                     <p style="font-weight: bold">@item.Name</p>
                     <p>@item.Description</p>
@@ -27,13 +27,13 @@
 </div>
 
 <h3 style="margin-top: 30px;">Snowboards</h3>
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+<div style="display: flex; flex-wrap: wrap;">
     @foreach (var item in Model.AllItems)
     {
         if (item.Attack != 0 && item.Name != "GOD MODE" && item.Name != "Developer Food")
         {
             <form method="post">
-            <div style="max-width: 200px; border-radius: 5px; border-style: solid; border-color: black;
+            <div style="width: 200px; border-radius: 5px; border-style: solid; border-color: black;
     padding: 10px; margin: 10px;">
                 <p style="font-weight: bold">@item.Name</p>
                 <p>@item.Description</p>
@@ -49,13 +49,13 @@
 </div>
 
 <h3 style="margin-top: 30px;">Snowboard Gear</h3>
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+<div style="display: flex; flex-wrap: wrap;">
     @foreach (var item in Model.AllItems)
     {
         if (item.Defense != 0 && item.Name != "GOD MODE" && item.Name != "Developer Food")
         {
             <form method="post">
-                <div style="max-width: 200px; border-radius: 5px; border-style: solid; border-color: black;
+                <div style="width: 200px; border-radius: 5px; border-style: solid; border-color: black;
     padding: 10px; margin: 10px;">
                     <p style="font-weight: bold">@item.Name</p>
                     <p>@item.Description</p>
@@ -71,13 +71,13 @@
 </div>
 
 <h3 style="margin-top: 30px;">Other</h3>
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+<div style="display: flex; flex-wrap: wrap;">
     @foreach (var item in Model.AllItems)
     {
         if (item.Fuel == 0 && item.Attack == 0 && item.Defense == 0)
         {
             <form method="post">
-            <div style="max-width: 200px; border-radius: 5px; border-style: solid; border-color: black;
+            <div style="width: 200px; border-radius: 5px; border-style: solid; border-color: black;
     padding: 10px; margin: 10px;">
                 <p style="font-weight: bold">@item.Name</p>
                 <p>@item.Description</p>

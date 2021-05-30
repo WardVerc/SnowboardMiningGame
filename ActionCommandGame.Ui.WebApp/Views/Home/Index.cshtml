@@ -2,26 +2,26 @@
 
 <div>
     @if (Model.CurrentPlayer.Name != null)
-        {
-            <h2 class="text-center" style="margin-bottom: 50px;">Want to hit the slopes, @Model.CurrentPlayer.Name?</h2>
-        }
-        else
-        {
-            <h2 class="text-center" style="margin-bottom: 50px;">Welcome, snowboarder!</h2>
-        }
+    {
+        <h2 class="text-center" style="margin-bottom: 50px;">Want to hit the slopes, @Model.CurrentPlayer.Name?</h2>
+    }
+    else
+    {
+        <h2 class="text-center" style="margin-bottom: 50px;">Welcome, snowboarder!</h2>
+    }
 
     <div id="centerGameSection" style="margin: 10px; display: flex; justify-content: space-between; align-items: center;">
         <!--Player stats -->
         <div style="width: 25%; font-size: small;">
             <p style="font-weight: bold; font-size: medium;">@Model.CurrentPlayer.Name's stats:</p>
-            <p>Level: @Math.Floor((Math.Sqrt(100*(2* Model.CurrentPlayer.Experience +25)) +50)/100)</p>
+            <p>Level: @Math.Floor((Math.Sqrt(100 * (2 * Model.CurrentPlayer.Experience + 25)) + 50) / 100)</p>
             <p>Exp: @Model.CurrentPlayer.Experience XP</p>
-            <p>Money: €@Model.CurrentPlayer.Money</p>
-            <p>Snowboard: @Model.CurrentPlayer.CurrentAttackPlayerItem?.Item.Name (@Model.CurrentPlayer.CurrentAttackPlayerItem?.RemainingAttack/@Model.CurrentPlayer.CurrentAttackPlayerItem?.Item.Attack)</p>
-            <p>Snowboard gear: @Model.CurrentPlayer.CurrentDefensePlayerItem?.Item.Name (@Model.CurrentPlayer.CurrentDefensePlayerItem?.RemainingDefense/@Model.CurrentPlayer.CurrentDefensePlayerItem?.Item.Defense)</p>
-            <p>Fuel: @Model.CurrentPlayer.CurrentFuelPlayerItem?.Item.Name (@Model.CurrentPlayer.CurrentFuelPlayerItem?.RemainingFuel/@Model.CurrentPlayer.CurrentFuelPlayerItem?.Item.Fuel)</p>
+            <p><img width="40px" alt="icon" src="~/images/money.png" /> €@Model.CurrentPlayer.Money</p>
+            <p><img width="40px" alt="icon" src="~/images/snowboard2.png" /> @Model.CurrentPlayer.CurrentAttackPlayerItem?.Item.Name (@Model.CurrentPlayer.CurrentAttackPlayerItem?.RemainingAttack/@Model.CurrentPlayer.CurrentAttackPlayerItem?.Item.Attack)</p>
+            <p><img width="40px" alt="icon" src="~/images/boot.png" /> @Model.CurrentPlayer.CurrentDefensePlayerItem?.Item.Name (@Model.CurrentPlayer.CurrentDefensePlayerItem?.RemainingDefense/@Model.CurrentPlayer.CurrentDefensePlayerItem?.Item.Defense)</p>
+            <p><img width="40px" alt="icon" src="~/images/food.png" /> @Model.CurrentPlayer.CurrentFuelPlayerItem?.Item.Name (@Model.CurrentPlayer.CurrentFuelPlayerItem?.RemainingFuel/@Model.CurrentPlayer.CurrentFuelPlayerItem?.Item.Fuel)</p>
         </div>
-        
+
         <!-- Game event after click -->
         <div style="width: 50%;">
             <!-- If positive game event -->
@@ -33,9 +33,9 @@
                     <p>@Model.Result.Data.PositiveGameEvent.Description</p>
                     <p style="font-size: small;">Exp: +@Model.Result.Data.PositiveGameEvent.Experience</p>
                     <p style="font-size: small;">Money: +@Model.Result.Data.PositiveGameEvent.Money</p>
-                    </div>
+                </div>
             }
-                    
+
             <!-- If negative game event -->
             @if (Model.Result?.Data?.NegativeGameEvent?.Name != null)
             {
@@ -45,27 +45,27 @@
                     <p>@Model.Result.Data.NegativeGameEvent.Description</p>
                 </div>
             }
-                    
-                    
-                    
+
+
+
             <!-- If negative game event messages-->
             @if (Model.Result?.Data?.NegativeGameEventMessages?.Count > 0)
             {
                 <div>
-                @foreach (var message in @Model.Result.Data.NegativeGameEventMessages)
-                {
-                    <div>
-                        <p>@message.Message</p>
-                        <p style="font-size: small;">Defense: -@Model.Result.Data.NegativeGameEvent?.DefenseLoss</p>
+                    @foreach (var message in @Model.Result.Data.NegativeGameEventMessages)
+                    {
+                        <div>
+                            <p>@message.Message</p>
+                            <p style="font-size: small;">Defense: -@Model.Result.Data.NegativeGameEvent?.DefenseLoss</p>
                         </div>
-                }
+                    }
                 </div>
             }
-            
+
         </div>
-        
-        
-        
+
+
+
         <!-- Error messages if there are any -->
         <div style="width: 25%; ">
             @if (Model.Result?.Messages?.Count > 0)
@@ -86,9 +86,9 @@
 
     
 
-    <div style="width: 50%; margin:  auto;">
-        <input type="button" value="Hit the slopes!" asp-action="HitButton" class="btn btn-info"
+    <div style="width: 50%; margin: auto;">
+        <button asp-action="HitButton" class="btn btn-info"
                onclick="location.href='@Url.Action("HitButton", "Home")'"
-               style="width: 100%; margin-top: 50px;"/>
+               style="width: 100%; display: flex; align-items: center; justify-content: space-between"><img width="50px" alt="icon" src="~/images/snowboard.png" /> Hit the slopes!<img width="50px" alt="icon" src="~/images/snowboard.png" /></button>
     </div>
 </div>
